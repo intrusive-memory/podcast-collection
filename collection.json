@@ -10,11 +10,14 @@
     "stoicism",
     "taoism",
     "spanish-literature",
+    "technology",
+    "ai",
+    "software-development",
     "intrusive-memory"
   ],
   "formatVersion": "1.0",
-  "revision": 2,
-  "generatedAt": "2026-02-11T15:30:00Z",
+  "revision": 3,
+  "generatedAt": "2026-02-11T16:35:00Z",
   "generatedBy": {
     "name": "Intrusive Memory"
   },
@@ -176,6 +179,37 @@
       "episodeCount": 10,
       "status": "active",
       "explicit": false
+    },
+    {
+      "name": "Casting Software Spells",
+      "published": false,
+      "feedURL": "https://intrusive-memory.productions/casting-software-spells/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/casting-software-spells/",
+      "summary": "Supernatural Code Craft - exploring the mystical art of software development through agentic incantation.",
+      "description": "A podcast exploring the mystical art of software development through agentic incantation, where code becomes spell-craft and developers become modern-day wizards. Each episode reveals the spells, rituals, and arcane knowledge for building, running and transforming software with AI-powered automation.",
+      "author": "Tom Stovall",
+      "genre": "Technology/Education",
+      "language": "en-US",
+      "keywords": [
+        "software-development",
+        "programming",
+        "technology",
+        "education",
+        "automation",
+        "ai",
+        "devtools",
+        "agentic-ai"
+      ],
+      "episodeCount": 12,
+      "status": "active",
+      "explicit": false,
+      "seasons": [
+        {
+          "number": 1,
+          "name": "Supernatural Code Craft",
+          "episodeCount": 12
+        }
+      ]
     }
   ]
 }

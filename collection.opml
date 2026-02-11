@@ -2,7 +2,7 @@
 <opml version="2.0">
   <head>
     <title>Intrusive Memory Podcasts</title>
-    <dateCreated>Wed, 11 Feb 2026 15:20:05 GMT</dateCreated>
+    <dateCreated>Wed, 11 Feb 2026 16:36:04 GMT</dateCreated>
   </head>
   <body>
     <outline
@@ -46,6 +46,13 @@
       xmlUrl="https://intrusive-memory.productions/mr-mr-charles/feed.xml"
       htmlUrl="https://intrusive-memory.productions/mr-mr-charles/"
       description="A comedy podcast series."
+    />
+    <outline
+      text="Casting Software Spells"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/casting-software-spells/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/casting-software-spells/"
+      description="Supernatural Code Craft - exploring the mystical art of software development through agentic incantation."
     />
   </body>
 </opml>
