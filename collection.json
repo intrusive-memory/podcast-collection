@@ -1,0 +1,175 @@
+{
+  "$schema": "https://raw.githubusercontent.com/intrusive-memory/podcast-collection/main/schema.json",
+  "name": "Intrusive Memory Podcasts",
+  "overview": "A curated collection of literary, philosophical, and narrative podcasts produced by Intrusive Memory. Features classic literature adaptations, philosophical meditations, and original fiction series.",
+  "keywords": [
+    "philosophy",
+    "literature",
+    "classics",
+    "fiction",
+    "stoicism",
+    "taoism",
+    "spanish-literature",
+    "intrusive-memory"
+  ],
+  "formatVersion": "1.0",
+  "revision": 1,
+  "generatedAt": "2026-02-10T22:30:00Z",
+  "generatedBy": {
+    "name": "Intrusive Memory"
+  },
+  "author": {
+    "name": "Tom Stovall",
+    "url": "https://intrusive-memory.productions"
+  },
+  "podcasts": [
+    {
+      "name": "Daily Dao - Tao De Jing Podcast",
+      "feedURL": "https://intrusive-memory.productions/daily-dao/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/daily-dao/",
+      "summary": "Daily readings from the Tao De Jing, exploring the nature of the Tao and the art of living in harmony.",
+      "description": "A contemplative journey through the 81 chapters of the Tao De Jing, the ancient Chinese philosophical text attributed to Laozi. Each episode presents one chapter with poetic rendering, contemplative commentary, and traditional translation.",
+      "author": "Tom Stovall",
+      "genre": "Philosophy",
+      "language": "en-GB",
+      "keywords": [
+        "taoism",
+        "philosophy",
+        "meditation",
+        "chinese-philosophy",
+        "wisdom",
+        "spirituality"
+      ],
+      "artworkURL": "https://intrusive-memory.productions/daily-dao/podcast-artwork.jpg",
+      "episodeCount": 81,
+      "status": "completed",
+      "explicit": false,
+      "seasons": [
+        {
+          "number": 1,
+          "name": "The Tao Ching & The De Ching",
+          "episodeCount": 81
+        }
+      ]
+    },
+    {
+      "name": "Meditations",
+      "feedURL": "https://intrusive-memory.productions/meditations/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/meditations/",
+      "summary": "Daily readings from Marcus Aurelius' Meditations, the personal writings of the Roman Emperor and Stoic philosopher.",
+      "description": "A year-long journey through the Meditations of Marcus Aurelius. Each episode presents one day's reading from this foundational Stoic text, offering timeless wisdom on virtue, duty, and the art of living.",
+      "author": "Marcus Aurelius",
+      "genre": "Philosophy",
+      "language": "en-US",
+      "keywords": [
+        "stoicism",
+        "philosophy",
+        "meditation",
+        "self-improvement",
+        "ancient-wisdom"
+      ],
+      "episodeCount": 365,
+      "status": "active",
+      "explicit": false,
+      "seasons": [
+        {
+          "number": 1,
+          "name": "Daily Meditations",
+          "episodeCount": 365
+        }
+      ]
+    },
+    {
+      "name": "The Life of Lazarillo de Tormes",
+      "feedURL": "https://intrusive-memory.productions/lazarillo/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/lazarillo/",
+      "summary": "A modern English translation of the anonymous 16th-century Spanish picaresque novel.",
+      "description": "La Vida de Lazarillo de Tormes - the anonymous Spanish picaresque novel that follows a young boy's journey through service to various masters in Renaissance Spain. A satirical look at Spanish society through the eyes of a clever survivor.",
+      "author": "Anonymous",
+      "genre": "Literature/Fiction",
+      "language": "en",
+      "keywords": [
+        "picaresque",
+        "spanish-literature",
+        "renaissance",
+        "translation",
+        "classic-literature",
+        "satire"
+      ],
+      "episodeCount": 7,
+      "status": "active",
+      "explicit": false,
+      "seasons": [
+        {
+          "number": 1,
+          "name": "Complete Novel",
+          "episodeCount": 7
+        }
+      ]
+    },
+    {
+      "name": "You're Nobody til Somebody Wants You Dead",
+      "feedURL": "https://intrusive-memory.productions/yntswyd/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/yntswyd/",
+      "summary": "An original fiction podcast series.",
+      "description": "A noir-style fiction podcast exploring themes of identity, mortality, and what it means to be truly seen in a world that often looks past us.",
+      "author": "Tom Stovall",
+      "genre": "Fiction",
+      "language": "en",
+      "keywords": [
+        "fiction",
+        "noir",
+        "drama",
+        "original-fiction"
+      ],
+      "episodeCount": 9,
+      "status": "active",
+      "explicit": false,
+      "seasons": [
+        {
+          "number": 1,
+          "episodeCount": 9
+        }
+      ]
+    },
+    {
+      "name": "Podcast Therapist GPT Episodes",
+      "feedURL": "https://intrusive-memory.productions/therapist-gpt/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/therapist-gpt/",
+      "summary": "Therapeutic insights and advice through AI-generated conversations.",
+      "description": "A podcast utilizing GPT technology to provide therapeutic insights, exploring mental health topics, coping strategies, and personal growth through conversational AI.",
+      "author": "Tom Stovall",
+      "genre": "Education",
+      "language": "en",
+      "keywords": [
+        "podcast",
+        "therapist",
+        "gpt",
+        "therapy",
+        "mental-health",
+        "ai"
+      ],
+      "episodeCount": 2,
+      "status": "active",
+      "explicit": false
+    },
+    {
+      "name": "Podcast Mr Mr Charles",
+      "feedURL": "https://intrusive-memory.productions/mr-mr-charles/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/mr-mr-charles/",
+      "summary": "A comedy podcast series.",
+      "description": "A comedy podcast series featuring original characters and humorous storytelling.",
+      "author": "Unknown",
+      "genre": "Comedy",
+      "language": "en",
+      "keywords": [
+        "podcast",
+        "comedy",
+        "humor"
+      ],
+      "episodeCount": 10,
+      "status": "active",
+      "explicit": false
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/intrusive-memory/podcast-collection/main/schema.json",
+  "title": "Podcast Collection",
+  "description": "A collection of podcast feeds with rich metadata for discovery and subscription management",
+  "type": "object",
+  "required": ["name", "formatVersion", "podcasts"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of this podcast collection"
+    },
+    "overview": {
+      "type": "string",
+      "description": "A description of the collection and its purpose"
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Keywords that describe the collection",
+      "items": {
+        "type": "string"
+      }
+    },
+    "formatVersion": {
+      "type": "string",
+      "description": "The version of the collection format",
+      "enum": ["1.0"]
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Revision number of this collection file",
+      "minimum": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this collection was generated"
+    },
+    "generatedBy": {
+      "type": "object",
+      "description": "Information about who generated this collection",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "author": {
+      "type": "object",
+      "description": "Information about the collection curator",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "podcasts": {
+      "type": "array",
+      "description": "List of podcasts in this collection",
+      "items": {
+        "$ref": "#/definitions/podcast"
+      }
+    }
+  },
+  "definitions": {
+    "podcast": {
+      "type": "object",
+      "required": ["name", "feedURL"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The podcast name"
+        },
+        "feedURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the RSS feed"
+        },
+        "websiteURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the podcast website or homepage"
+        },
+        "summary": {
+          "type": "string",
+          "description": "A short summary of the podcast"
+        },
+        "description": {
+          "type": "string",
+          "description": "A longer description of the podcast"
+        },
+        "author": {
+          "type": "string",
+          "description": "The podcast author or creator"
+        },
+        "genre": {
+          "type": "string",
+          "description": "Primary genre classification"
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary language code (e.g., 'en', 'en-US', 'en-GB')"
+        },
+        "keywords": {
+          "type": "array",
+          "description": "Keywords that describe the podcast",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artworkURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to podcast artwork (recommended: 1400x1400 or larger)"
+        },
+        "episodeCount": {
+          "type": "integer",
+          "description": "Total number of episodes",
+          "minimum": 0
+        },
+        "status": {
+          "type": "string",
+          "description": "Production status of the podcast",
+          "enum": ["active", "completed", "hiatus", "archived"]
+        },
+        "explicit": {
+          "type": "boolean",
+          "description": "Whether the podcast contains explicit content"
+        },
+        "fundingURLs": {
+          "type": "array",
+          "description": "URLs for supporting the podcast financially",
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "seasons": {
+          "type": "array",
+          "description": "Season information if podcast is structured into seasons",
+          "items": {
+            "type": "object",
+            "required": ["number"],
+            "properties": {
+              "number": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "episodeCount": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

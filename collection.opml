@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Intrusive Memory Podcasts</title>
+    <dateCreated>Wed, 11 Feb 2026 15:20:05 GMT</dateCreated>
+  </head>
+  <body>
+    <outline
+      text="Daily Dao - Tao De Jing Podcast"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/daily-dao/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/daily-dao/"
+      description="Daily readings from the Tao De Jing, exploring the nature of the Tao and the art of living in harmony."
+    />
+    <outline
+      text="Meditations"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/meditations/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/meditations/"
+      description="Daily readings from Marcus Aurelius' Meditations, the personal writings of the Roman Emperor and Stoic philosopher."
+    />
+    <outline
+      text="The Life of Lazarillo de Tormes"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/lazarillo/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/lazarillo/"
+      description="A modern English translation of the anonymous 16th-century Spanish picaresque novel."
+    />
+    <outline
+      text="You're Nobody til Somebody Wants You Dead"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/yntswyd/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/yntswyd/"
+      description="An original fiction podcast series."
+    />
+    <outline
+      text="Podcast Therapist GPT Episodes"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/therapist-gpt/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/therapist-gpt/"
+      description="Therapeutic insights and advice through AI-generated conversations."
+    />
+    <outline
+      text="Podcast Mr Mr Charles"
+      type="rss"
+      xmlUrl="https://intrusive-memory.productions/mr-mr-charles/feed.xml"
+      htmlUrl="https://intrusive-memory.productions/mr-mr-charles/"
+      description="A comedy podcast series."
+    />
+  </body>
+</opml>
