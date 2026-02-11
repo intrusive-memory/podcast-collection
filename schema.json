@@ -73,7 +73,7 @@
   "definitions": {
     "podcast": {
       "type": "object",
-      "required": ["name", "feedURL"],
+      "required": ["name", "feedURL", "published"],
       "properties": {
         "name": {
           "type": "string",
@@ -83,6 +83,10 @@
           "type": "string",
           "format": "uri",
           "description": "URL to the RSS feed"
+        },
+        "published": {
+          "type": "boolean",
+          "description": "Whether the podcast is publicly available. Set to true when podcast is complete and ready for public consumption."
         },
         "websiteURL": {
           "type": "string",

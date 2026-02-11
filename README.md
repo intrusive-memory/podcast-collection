@@ -122,6 +122,7 @@ This collection uses a JSON format inspired by Swift Package Collections but ada
   "podcasts": [
     {
       "name": "Daily Dao - Tao De Jing Podcast",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/daily-dao/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/daily-dao/",
       "summary": "...",
@@ -133,6 +134,20 @@ This collection uses a JSON format inspired by Swift Package Collections but ada
   ]
 }
 ```
+
+### Published Status
+
+The `published` boolean field indicates whether a podcast is ready for public consumption:
+
+- `"published": false` - Podcast is in development, incomplete, or not yet ready for distribution
+- `"published": true` - Podcast is complete and publicly available
+
+This allows the collection to:
+- Maintain a complete list of all podcasts (including works-in-progress)
+- Filter out unpublished podcasts for public-facing displays
+- Track production status without checking individual podcast directories
+
+**Note**: All podcasts in this collection are currently marked as unpublished (`"published": false`) as they are in active development.
 
 ### Schema Validation
 

@@ -13,8 +13,8 @@
     "intrusive-memory"
   ],
   "formatVersion": "1.0",
-  "revision": 1,
-  "generatedAt": "2026-02-10T22:30:00Z",
+  "revision": 2,
+  "generatedAt": "2026-02-11T15:30:00Z",
   "generatedBy": {
     "name": "Intrusive Memory"
   },
@@ -25,6 +25,7 @@
   "podcasts": [
     {
       "name": "Daily Dao - Tao De Jing Podcast",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/daily-dao/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/daily-dao/",
       "summary": "Daily readings from the Tao De Jing, exploring the nature of the Tao and the art of living in harmony.",
@@ -54,6 +55,7 @@
     },
     {
       "name": "Meditations",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/meditations/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/meditations/",
       "summary": "Daily readings from Marcus Aurelius' Meditations, the personal writings of the Roman Emperor and Stoic philosopher.",
@@ -81,6 +83,7 @@
     },
     {
       "name": "The Life of Lazarillo de Tormes",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/lazarillo/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/lazarillo/",
       "summary": "A modern English translation of the anonymous 16th-century Spanish picaresque novel.",
@@ -109,6 +112,7 @@
     },
     {
       "name": "You're Nobody til Somebody Wants You Dead",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/yntswyd/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/yntswyd/",
       "summary": "An original fiction podcast series.",
@@ -134,6 +138,7 @@
     },
     {
       "name": "Podcast Therapist GPT Episodes",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/therapist-gpt/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/therapist-gpt/",
       "summary": "Therapeutic insights and advice through AI-generated conversations.",
@@ -155,6 +160,7 @@
     },
     {
       "name": "Podcast Mr Mr Charles",
+      "published": false,
       "feedURL": "https://intrusive-memory.productions/mr-mr-charles/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/mr-mr-charles/",
       "summary": "A comedy podcast series.",
