@@ -2,7 +2,7 @@
 <opml version="2.0">
   <head>
     <title>Intrusive Memory Podcasts</title>
-    <dateCreated>Wed, 11 Feb 2026 16:36:04 GMT</dateCreated>
+    <dateCreated>Wed, 11 Feb 2026 16:46:13 GMT</dateCreated>
   </head>
   <body>
     <outline
@@ -31,7 +31,7 @@
       type="rss"
       xmlUrl="https://intrusive-memory.productions/yntswyd/feed.xml"
       htmlUrl="https://intrusive-memory.productions/yntswyd/"
-      description="An original fiction podcast series."
+      description="An anthological picaresque exploring identity and mortality through unlikable characters in a noir world."
     />
     <outline
       text="Podcast Therapist GPT Episodes"

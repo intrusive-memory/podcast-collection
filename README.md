@@ -18,7 +18,7 @@ Similar to [Swift Package Collections](https://swift.org/blog/package-collection
 | [Daily Dao - Tao De Jing](#daily-dao---tao-de-jing-podcast) | 81 | Philosophy | A contemplative journey through the 81 chapters of Laozi's ancient Chinese philosophical text. |
 | [Meditations](#meditations) | 365 | Philosophy | Daily readings from Marcus Aurelius' personal writings on Stoic philosophy and the art of living. |
 | [The Life of Lazarillo de Tormes](#the-life-of-lazarillo-de-tormes) | 7 | Literature/Fiction | A modern English translation of the anonymous 16th-century Spanish picaresque novel. |
-| [You're Nobody til Somebody Wants You Dead](#youre-nobody-til-somebody-wants-you-dead) | 9 | Fiction | A noir-style fiction podcast exploring themes of identity, mortality, and what it means to be seen. |
+| [You're Nobody til Somebody Wants You Dead](#youre-nobody-til-somebody-wants-you-dead) | 9 | Fiction | An anthological picaresque exploring identity and mortality through unlikable characters in a noir world. |
 | [Podcast Therapist GPT Episodes](#podcast-therapist-gpt-episodes) | 2 | Education | Therapeutic insights and mental health guidance through AI-generated conversations. |
 | [Podcast Mr Mr Charles](#podcast-mr-mr-charles) | 10 | Comedy | A comedy podcast series featuring original characters and humorous storytelling. |
 | [Casting Software Spells](#casting-software-spells) | 12 | Technology/Education | Exploring software development as modern magic through agentic incantation and AI-powered automation. |
@@ -85,11 +85,11 @@ A modern English translation of the anonymous 16th-century Spanish picaresque no
 
 **9 episodes** | **Fiction** | **Active**
 
-A noir-style fiction podcast exploring themes of identity, mortality, and what it means to be truly seen.
+An anthological picaresque exploring identity and mortality through the eyes of rogues, outcasts, and anti-heroes in a noir world where you're nobody until somebody wants you dead.
 
 - **Feed**: [RSS](https://intrusive-memory.productions/yntswyd/feed.xml)
 - **Website**: [intrusive-memory.productions/yntswyd](https://intrusive-memory.productions/yntswyd/)
-- **Tags**: fiction, noir, drama, original-fiction
+- **Tags**: fiction, noir, picaresque, anthological, anti-hero, anthology-series, drama, original-fiction
 
 ### Podcast Therapist GPT Episodes
 

@@ -16,8 +16,8 @@
     "intrusive-memory"
   ],
   "formatVersion": "1.0",
-  "revision": 3,
-  "generatedAt": "2026-02-11T16:35:00Z",
+  "revision": 4,
+  "generatedAt": "2026-02-11T16:50:00Z",
   "generatedBy": {
     "name": "Intrusive Memory"
   },
@@ -118,14 +118,18 @@
       "published": false,
       "feedURL": "https://intrusive-memory.productions/yntswyd/feed.xml",
       "websiteURL": "https://intrusive-memory.productions/yntswyd/",
-      "summary": "An original fiction podcast series.",
-      "description": "A noir-style fiction podcast exploring themes of identity, mortality, and what it means to be truly seen in a world that often looks past us.",
+      "summary": "An anthological picaresque exploring identity and mortality through unlikable characters in a noir world.",
+      "description": "An anthological picaresque exploring identity and mortality through the eyes of rogues, outcasts, and anti-heroes in a noir world where you're nobody until somebody wants you dead.",
       "author": "Tom Stovall",
       "genre": "Fiction",
       "language": "en",
       "keywords": [
         "fiction",
         "noir",
+        "picaresque",
+        "anthological",
+        "anti-hero",
+        "anthology-series",
         "drama",
         "original-fiction"
       ],
