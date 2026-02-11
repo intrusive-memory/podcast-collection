@@ -113,8 +113,9 @@ LOCAL_AUDIO_COUNT=$(find "$PODCAST_DIR/audio" -name "*.m4a" 2>/dev/null | wc -l 
     "test $LOCAL_AUDIO_COUNT -eq $EPISODE_COUNT"
 
   # Sample check first audio file (naming varies by podcast)
-  FIRST_AUDIO=$(find "$PODCAST_DIR/audio" -name "*.m4a" 2>/dev/null | head -1 | xargs basename)
-  if [ -n "$FIRST_AUDIO" ]; then
+  FIRST_AUDIO_PATH=$(find "$PODCAST_DIR/audio" -name "*.m4a" 2>/dev/null | head -1)
+  if [ -n "$FIRST_AUDIO_PATH" ]; then
+    FIRST_AUDIO=$(basename "$FIRST_AUDIO_PATH")
     # URL-encode the filename for the check (spaces become %20)
     FIRST_AUDIO_ENCODED=$(echo "$FIRST_AUDIO" | sed 's/ /%20/g')
     check_item "Sample audio file on CDN: $FIRST_AUDIO" \
@@ -205,14 +206,16 @@ echo "" >> "$TEMP_FILE"
     "test -f '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml'"
 
   if [ -f "$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml" ]; then
-    check_item "Feed is valid XML" \
-      "xmllint --noout '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml' 2>/dev/null"
+    # Skip XML validation for Jekyll templates (have front matter)
+    check_item "Feed is valid XML (or Jekyll template)" \
+      "head -1 '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml' | grep -q '^---$' || xmllint --noout '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml' 2>/dev/null"
 
     check_item "Feed artwork points to CDN" \
       "grep -q '$CDN_BASE/$PODCAST_SLUG/podcast-artwork.jpg' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml'"
 
+    # Check for CDN URLs or Jekyll variables ({{ site.audio_cdn }})
     check_item "Episode enclosures point to CDN" \
-      "grep -q 'enclosure.*url.*$CDN_BASE/$PODCAST_SLUG/.*\.m4a' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml'"
+      "grep -qE '(enclosure.*url.*$CDN_BASE/$PODCAST_SLUG/.*\.m4a|enclosure.*url.*site\.audio_cdn.*$PODCAST_SLUG/)' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/feed.xml'"
   fi
 } >> "$TEMP_FILE"
 
