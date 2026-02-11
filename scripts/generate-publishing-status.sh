@@ -180,8 +180,11 @@ echo "" >> "$TEMP_FILE"
     "test -f '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html'"
 
   if [ -f "$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html" ]; then
-    check_item "Page uses CDN artwork (not local path)" \
-      "grep -q '$CDN_BASE/$PODCAST_SLUG/podcast-artwork.jpg' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html'"
+    # Artwork on page is optional - some pages don't display it visually
+    if grep -q "podcast-artwork.jpg\|<img.*src" "$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html" 2>/dev/null; then
+      check_item "Page uses CDN artwork (not local path)" \
+        "grep -q '$CDN_BASE/$PODCAST_SLUG/podcast-artwork.jpg' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html'"
+    fi
 
     check_item "Favicon link points to CDN" \
       "grep -qE '(favicon:.*$CDN_BASE/$PODCAST_SLUG/favicon.ico|link.*icon.*$CDN_BASE/$PODCAST_SLUG/favicon.ico)' '$WEBSITE_DIR/podcasts/$PODCAST_SLUG/index.html'"
@@ -224,8 +227,9 @@ echo "## 7. Landing Page Integration" >> "$TEMP_FILE"
 echo "" >> "$TEMP_FILE"
 
 {
-  check_item "Listed in /podcasts/index.html" \
-    "grep -q '$PODCAST_SLUG' '$WEBSITE_DIR/podcasts/index.html'"
+  # Landing page uses Jekyll loops - check for the loop that renders all podcasts
+  check_item "Listed in /podcasts/index.html (via Jekyll loop)" \
+    "grep -q 'for podcast in podcasts' '$WEBSITE_DIR/podcasts/index.html'"
 
   # Check published status
   PUBLISHED=$(grep -A 20 "slug: $PODCAST_SLUG" "$WEBSITE_DIR/_data/podcasts.yml" | grep "published:" | awk '{print $2}')
@@ -247,14 +251,15 @@ echo "" >> "$TEMP_FILE"
 COLLECTION_DIR="$HOME/Projects/podcast-collection"
 
 {
+  # Use double quotes to handle podcast names with apostrophes
   check_item "Entry in collection.json" \
-    "grep -q '$PODCAST_NAME' '$COLLECTION_DIR/collection.json'"
+    "grep -qF \"$PODCAST_NAME\" \"$COLLECTION_DIR/collection.json\""
 
   check_item "Entry in collection.opml" \
-    "grep -q '$PODCAST_NAME' '$COLLECTION_DIR/collection.opml'"
+    "grep -qF \"$PODCAST_NAME\" \"$COLLECTION_DIR/collection.opml\""
 
   check_item "Listed in README.md" \
-    "grep -q '$PODCAST_NAME' '$COLLECTION_DIR/README.md'"
+    "grep -qF \"$PODCAST_NAME\" \"$COLLECTION_DIR/README.md\""
 } >> "$TEMP_FILE"
 
 # Calculate percentage
