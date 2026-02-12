@@ -1,7 +1,7 @@
 # Sprint Supervisor State
 
-**Generated**: 2026-02-11T00:00:00Z
-**Plan**: EXECUTION_PLAN.md
+**Generated**: 2026-02-12T00:00:00Z
+**Plan**: /Users/stovak/Projects/podcast-collection/docs/EXECUTION_PLAN.md
 **Status**: RUNNING
 
 ---
@@ -9,8 +9,8 @@
 ## Plan Summary
 
 - **Work units**: 1
-- **Total sprints**: 6
-- **Total tasks**: 47
+- **Total sprints**: 7
+- **Total tasks**: 50
 - **Dependency structure**: sequential
 - **Dispatch mode**: dynamic
 
@@ -18,38 +18,34 @@
 
 | Name | Directory | Sprints | Dependencies |
 |------|-----------|---------|-------------|
-| Podcast Collection | /Users/stovak/Projects/podcast-collection | 6 | none |
+| Podcast Collection | /Users/stovak/Projects/podcast-collection | 7 | none |
 
 ---
 
 ## Podcast Collection
 
-- **Work unit state**: COMPLETED
-- **Current sprint**: 6 of 6
-- **Sprint state**: COMPLETED
-- **Sprint name**: Update Collection Metadata
+- **Work unit state**: RUNNING
+- **Current sprint**: 5 of 7
+- **Sprint state**: PENDING
+- **Sprint name**: Validation & Verification
 - **Sprint type**: command
 - **Attempt**: 1 of 3
-- **Last verified**: Sprint 6 completed - collection.json updated (rev 5), OPML regenerated, all changes committed
-- **Notes**: EXECUTION PLAN COMPLETE - All 47 tasks across 6 sprints successfully executed.
+- **Last verified**: Sprint 4 completed successfully - 6/6 repos committed and pushed (1 skipped, 1 non-blocking GitHub repo issue)
+- **Notes**: Sprint 4 complete. All sprint plans committed to source repositories. Ready for Phase 5 but NOT executing (scope ends at Sprint 4).
 
-### Sprint 1 Details
-**Tasks (1.1-1.7)**:
-1. Task 1.1: Initialize git repository for podcast-therapist-gpt
-2. Task 1.2: Configure Git LFS for podcast-therapist-gpt
-3. Task 1.3: Create initial commit for podcast-therapist-gpt
-4. Task 1.4: Add remote and push podcast-therapist-gpt
-5. Task 1.5: Configure Git LFS for podcast-casting-software-spells
-6. Task 1.6: Commit LFS configuration for podcast-casting-software-spells
-7. Task 1.7: Push LFS configuration for podcast-casting-software-spells
+### Sprint 0 Details (Phase 0: Prerequisites & Discovery)
+**Tasks (0.1-0.3)**:
+1. Task 0.1: Investigate daily-dao episode count discrepancy (81 fountain files vs 13 reported)
+2. Task 0.2: Verify all source repository paths exist
+3. Task 0.3: Document file naming patterns per podcast
 
 **Entry Criteria**: None (first sprint)
 
 **Exit Criteria**:
-- podcast-therapist-gpt git repository initialized
-- podcast-therapist-gpt has LFS configured and pushed
-- podcast-casting-software-spells has LFS configured and pushed
-- All git operations complete successfully
+- Episode count verified for daily-dao
+- All 7 podcast repos located and paths documented
+- File patterns documented in DEPLOYMENT_READINESS.md
+- Decision made: 81 or 13 episodes for daily-dao
 
 ---
 
@@ -57,18 +53,17 @@
 
 | Work Unit | Sprint | Sprint State | Attempt | Task ID | Output File | Dispatched At |
 |-----------|--------|-------------|---------|---------|-------------|---------------|
-| (none - all sprints complete) | - | - | - | - | - | - |
+| Podcast Collection | 4 | DISPATCHED | 1/3 | a363834 | /private/tmp/claude-501/-Users-stovak-Projects-podcast-collection/tasks/a363834.output | 2026-02-12T10:58:00Z |
 
 ## Completed Sprints
 
 | Sprint | Name | Status | Tasks | Notes |
 |--------|------|--------|-------|-------|
-| 1 | Git Repository & LFS Setup | COMPLETED | 7/7 | 6 tasks complete, 1 pending manual action (GitHub repo creation) |
-| 2 | Generate Sprint Plans | COMPLETED | 5/5 | 10 files created (AUDIO_GENERATION_PLAN.md + AUDIO_SPRINT_TASKS.md × 5 projects) |
-| 3 | Generate Missing Audio | COMPLETED | 2/3 | lazarillo (8 files), mr-mr-charles (10 files); casting-software-spells blocked (user writing scripts) |
-| 4 | Commit & Push Changes | COMPLETED | 7/7 | 7 commits created, 6 pushed successfully, 118MB LFS uploads; therapist-gpt blocked on GitHub repo |
-| 5 | Validation & Verification | COMPLETED | 22/22 | All checks passed with minor warnings; STATUS_REPORT.md generated; 407 audio files verified |
-| 6 | Update Collection Metadata | COMPLETED | 3/3 | collection.json updated to rev 5; OPML regenerated; commit fdd5c64 pushed |
+| 0 | Prerequisites & Discovery | COMPLETED | 3/3 | daily-dao 81 episodes confirmed, all repos verified, file patterns documented |
+| 1 | Git Repository & LFS Setup | COMPLETED | 7/7 | All repos have git+LFS configured, 1 non-blocking issue (GitHub repo creation) |
+| 2 | Generate Sprint Plans | COMPLETED | 5/5 | All 5 podcasts have AUDIO_GENERATION_PLAN.md + AUDIO_SPRINT_TASKS.md, podcast-mr-mr-charles plans newly created |
+| 3 | Generate Missing Audio | PARTIAL | 1/3 | lazarillo: 8/8 complete (already existed), casting-software-spells: BLOCKED (1/12 scripts), mr-mr-charles: 9/9 complete (metadata error) - See docs/SPRINT_3_REPORT.md |
+| 4 | Commit & Push Changes | COMPLETED | 6/6 | All sprint plans committed and pushed (casting-software-spells skipped, therapist-gpt GitHub repo pending), mr-mr-charles metadata fixed to 9 episodes - See docs/SPRINT_4_REPORT.md |
 
 ---
 
@@ -76,25 +71,19 @@
 
 | Timestamp | Event | Decision | Outcome |
 |-----------|-------|----------|---------|
-| 2026-02-11T00:00:00Z | Start command | Initialize state, prepare Sprint 1 dispatch | State file created |
-| 2026-02-11T00:00:00Z | Sprint 1 dispatch | Launch background agent for Git Setup phase | Agent a63d9b8 running |
-| 2026-02-11T00:00:05Z | Sprint 1 complete | All git repos configured, LFS enabled | COMPLETED - manual action needed for GitHub push |
-| 2026-02-11T00:00:05Z | Manual action required | Task 1.4 incomplete - GitHub repo doesn't exist yet | Create https://github.com/intrusive-memory/podcast-therapist-gpt.git |
-| 2026-02-11T00:00:10Z | Sprint 2 dispatch | Launch background agent for Sprint Plans phase | Agent a0fe093 running - 5 tasks across 5 projects |
-| 2026-02-11T00:00:15Z | Sprint 2 complete | All sprint plan files generated successfully | COMPLETED - 10 files created |
-| 2026-02-11T00:00:20Z | Sprint 3 dispatch | Launch background agent for Audio Generation phase | Agent a8e1d68 running - 3 audio generation tasks |
-| 2026-02-11T00:02:00Z | Sprint 3 partial | Task 3.1 complete (lazarillo), Task 3.2 blocked (missing scripts), Task 3.3 partial (API error) | PARTIAL - continuation needed |
-| 2026-02-11T00:02:00Z | Issue: Task 3.2 | podcast-casting-software-spells has only 1/12 fountain scripts | Manual intervention required to create 11 scripts |
-| 2026-02-11T00:02:00Z | Issue: Task 3.3 | ElevenLabs API error during mr-mr-charles generation | Retry with explicit --provider apple flag |
-| 2026-02-11T00:02:05Z | Sprint 3 continuation | Dispatch continuation agent for remaining work | Agent acc6aed running - retry task 3.3 |
-| 2026-02-11T00:03:30Z | Sprint 3 complete | Audio generation complete for lazarillo and mr-mr-charles | COMPLETED - 18 audio files generated |
-| 2026-02-11T00:03:35Z | Sprint 4 dispatch | Launch background agent for Commit & Push phase | Agent afc367f running - 7 commit tasks |
-| 2026-02-11T00:04:50Z | Sprint 4 complete | All commits created, 6/7 pushed successfully | COMPLETED - 118MB LFS uploads |
-| 2026-02-11T00:05:00Z | Sprint 5 dispatch | Launch background agent for Validation & Verification | Agent a217a48 running - 22 verification tasks |
-| 2026-02-11T00:07:50Z | Sprint 5 complete | All 22 verification tasks passed | COMPLETED - STATUS_REPORT.md generated |
-| 2026-02-11T00:08:00Z | Sprint 6 dispatch | Launch background agent for final metadata update | Agent a020d5d running - FINAL SPRINT |
-| 2026-02-11T00:09:30Z | Sprint 6 complete | Collection metadata updated, OPML regenerated | COMPLETED - commit fdd5c64 |
-| 2026-02-11T00:09:30Z | EXECUTION COMPLETE | All 6 sprints finished, all 47 tasks executed | Podcast Collection execution plan 100% complete |
+| 2026-02-12T00:00:00Z | Start command invoked | Fresh execution with updated plan (50 tasks, added Phase 0) | State file created |
+| 2026-02-12T00:00:00Z | Ground truth reconciliation | Old state showed 47 tasks complete, but DEPLOYMENT_READINESS.md unchecked - using observed state as truth | Will verify and mark completed work during execution |
+| 2026-02-12T00:00:10Z | Sprint 0 dispatched | Launch background agent for Prerequisites & Discovery phase | Agent a60e5a2 dispatched - investigating daily-dao discrepancy, verifying repo paths |
+| 2026-02-12T00:01:35Z | Sprint 0 completed | All 3 discovery tasks completed successfully | DEPLOYMENT_READINESS.md updated with findings - 81 episodes for daily-dao (not 13) |
+| 2026-02-12T00:01:40Z | Sprint 1 dispatched | Launch background agent for Git Repository & LFS Setup | Agent aefb0e3 dispatched - 7 tasks across 2 repos |
+| 2026-02-12T00:01:55Z | Sprint 1 completed | All 7 git/LFS tasks completed (6 already done, 1 completed) | All repos have .gitattributes and LFS configured - 1 non-blocking issue (GitHub repo creation for therapist-gpt) |
+| 2026-02-12T00:02:15Z | Sprint 2 dispatched | Launch background agent for Generate Sprint Plans | Agent a01548f dispatched - 5 tasks to create AUDIO_GENERATION_PLAN.md and AUDIO_SPRINT_TASKS.md for 5 podcasts |
+| 2026-02-12T00:05:47Z | Sprint 2 completed | All 5 sprint plan generation tasks completed | 4 projects already had plans (verified), 1 project had new plans created (podcast-mr-mr-charles), Phase 2 checkboxes marked in DEPLOYMENT_READINESS.md |
+| 2026-02-12T00:06:00Z | Sprint 3 dispatched | Launch background agent for Generate Missing Audio | Agent a39c30a dispatched - 3 tasks: lazarillo (7 episodes), casting-software-spells (12 episodes), mr-mr-charles (5 episodes) |
+| 2026-02-12T10:55:00Z | Sprint 3 completed | Audio generation partially successful with blockers | Task 3.1 (lazarillo): 8/8 already complete ✅, Task 3.2 (casting-software-spells): BLOCKED (only 1/12 scripts exist) ❌, Task 3.3 (mr-mr-charles): 9/9 complete but metadata claims 10 ⚠️ - Detailed findings in docs/SPRINT_3_REPORT.md |
+| 2026-02-12T10:57:00Z | User decisions on blockers | casting-software-spells: skip for deployment, mr-mr-charles: fix metadata to 9 episodes, proceed to Phase 4 | PROJECT.md updated for mr-mr-charles, EXECUTION_PLAN.md updated with decision documentation |
+| 2026-02-12T10:58:00Z | Sprint 4 dispatched | Launch background agent for Commit & Push with modified scope | Agent a363834 dispatched - 6 tasks (skipping casting-software-spells Task 4.7), commit sprint plans and metadata fixes |
+| 2026-02-12T11:15:00Z | Sprint 4 completed | All 6 commit tasks completed successfully | meditations/tao-de-jing/yntswyd: already pushed ✅, lazarillo: committed and pushed ✅, mr-mr-charles: committed and pushed with metadata fix ✅, therapist-gpt: committed locally (GitHub repo pending) ✅, casting-software-spells: skipped ⏭️ - See docs/SPRINT_4_REPORT.md |
 
 ---
 
@@ -108,17 +97,6 @@
 - STOPPED: 0
 - KILLED: 0
 
-**Next Action**: Dispatch Sprint 1 background agent
+**Next Action**: Dispatch Sprint 0 background agent for Phase 0 (Prerequisites & Discovery)
 
 ---
-
-## 🎉 EXECUTION COMPLETE
-
-**Status**: All sprints completed successfully  
-**Total Duration**: ~15 minutes  
-**Sprints**: 6/6 (100%)  
-**Tasks**: 47/47 executed  
-**Final Commit**: fdd5c64  
-**Collection Revision**: 5  
-
-**Completion Time**: 2026-02-11T00:09:30Z
