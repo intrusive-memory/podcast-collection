@@ -16,8 +16,8 @@
     "intrusive-memory"
   ],
   "formatVersion": "1.0",
-  "revision": 5,
-  "generatedAt": "2026-02-11T19:45:00Z",
+  "revision": 6,
+  "generatedAt": "2026-02-12T19:30:00Z",
   "generatedBy": {
     "name": "Intrusive Memory"
   },
@@ -45,14 +45,14 @@
         "spirituality"
       ],
       "artworkURL": "https://intrusive-memory.productions/daily-dao/podcast-artwork.jpg",
-      "episodeCount": 13,
+      "episodeCount": 81,
       "status": "active",
       "explicit": false,
       "seasons": [
         {
           "number": 1,
           "name": "The Tao Ching & The De Ching",
-          "episodeCount": 13
+          "episodeCount": 81
         }
       ]
     },
@@ -180,7 +180,7 @@
         "comedy",
         "humor"
       ],
-      "episodeCount": 10,
+      "episodeCount": 9,
       "status": "active",
       "explicit": false
     },
