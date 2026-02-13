@@ -19,7 +19,7 @@ Similar to [Swift Package Collections](https://swift.org/blog/package-collection
 | [Meditations](#meditations) | 365 | Philosophy | Daily readings from Marcus Aurelius' personal writings on Stoic philosophy and the art of living. |
 | [The Life of Lazarillo de Tormes](#the-life-of-lazarillo-de-tormes) | 7 | Literature/Fiction | A modern English translation of the anonymous 16th-century Spanish picaresque novel. |
 | [You're Nobody til Somebody Wants You Dead](#youre-nobody-til-somebody-wants-you-dead) | 9 | Fiction | An anthological picaresque exploring identity and mortality through unlikable characters in a noir world. |
-| [Podcast Therapist GPT Episodes](#podcast-therapist-gpt-episodes) | 2 | Education | Therapeutic insights and mental health guidance through AI-generated conversations. |
+| [Therapist GPT](#podcast-therapist-gpt-episodes) | 2 | Education | Therapeutic insights and mental health guidance through AI-generated conversations. |
 | [Podcast Mr Mr Charles](#podcast-mr-mr-charles) | 10 | Comedy | A comedy podcast series featuring original characters and humorous storytelling. |
 | [Casting Software Spells](#casting-software-spells) | 12 | Technology/Education | Exploring software development as modern magic through agentic incantation and AI-powered automation. |
 
@@ -91,7 +91,7 @@ An anthological picaresque exploring identity and mortality through the eyes of 
 - **Website**: [intrusive-memory.productions/yntswyd](https://intrusive-memory.productions/yntswyd/)
 - **Tags**: fiction, noir, picaresque, anthological, anti-hero, anthology-series, drama, original-fiction
 
-### Podcast Therapist GPT Episodes
+### Therapist GPT
 
 **2 episodes** | **Education** | **Active**
 
