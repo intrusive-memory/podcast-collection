@@ -1,6 +1,6 @@
 ---
 name: podcast-audio-plan
-description: Generate audio for podcast episodes from Fountain screenplays using Produciesta CLI. When asked to "generate podcast audio", "create audio plan", "cast voices", or working with podcast projects that have episodes/*.fountain files, this skill analyzes characters, assigns appropriate voices, writes PROJECT.md cast list, and generates audio.
+description: Generate audio and transcripts for podcast episodes from Fountain screenplays using Produciesta CLI. When asked to "generate podcast audio", "create audio plan", "cast voices", "prepare transcripts", or working with podcast projects that have episodes/*.fountain files, this skill analyzes characters, assigns voices, writes PROJECT.md cast list, generates audio, and prepares transcripts for web deployment.
 ---
 
 # Podcast Audio Generation with Produciesta
@@ -19,14 +19,18 @@ Use this skill when:
 
 ## What This Skill Does
 
-This skill provides a **Claude-assisted workflow** for podcast audio generation:
+This skill provides a **Claude-assisted workflow** for podcast audio generation and web publishing:
 
 1. **Analyze Fountain files** to extract character list
 2. **Query available voices** from Apple TTS or ElevenLabs
 3. **Match characters to voices** based on character traits and voice characteristics
 4. **Write PROJECT.md** with proper YAML front matter and cast list
 5. **Generate audio** using Produciesta CLI
-6. **Create execution plans** for batch processing
+6. **Commit audio to Git LFS** and verify CDN availability
+7. **Copy transcripts** to website episodes directory
+8. **Update website page** with CDN links, metadata, and RSS feed
+9. **Validate deployment** (subscribe links, playback, transcripts)
+10. **Deploy to production** via git push
 
 ## Prerequisites
 
@@ -39,15 +43,40 @@ This skill provides a **Claude-assisted workflow** for podcast audio generation:
 
 ### Project Structure
 
+**Podcast Source Repository (Produciesta project):**
 ```
-podcast-project/
+~/podcast-daily-dao/
 ├── PROJECT.md              # Project configuration (Claude creates this)
-├── episodes/               # Fountain screenplay files
+├── episodes/               # Fountain screenplay files (source)
 │   ├── chapter-01.fountain
 │   ├── chapter-02.fountain
 │   └── ...
-└── audio/                  # Generated audio files (created by Produciesta)
+├── audio/                  # Generated audio files (Git LFS)
+│   ├── chapter-01.m4a
+│   ├── chapter-02.m4a
+│   └── ...
+└── .gitattributes          # LFS configuration for *.m4a files
 ```
+
+**Website Repository (intrusive-memory.github.com):**
+```
+~/Projects/intrusive-memory.github.com/podcasts/daily-dao/
+├── index.html              # Podcast player page
+├── feed.xml                # RSS feed
+├── podcast-artwork.jpg     # Cover art (3000x3000)
+├── favicon.ico
+├── apple-touch-icon.png
+├── episodes/               # Transcripts (copied from source)
+│   ├── chapter-01.fountain
+│   ├── chapter-02.fountain
+│   └── ...
+└── audio/                  # Placeholder or symlink (audio served from CDN)
+```
+
+**Critical Separation:**
+- **Source repo**: Where audio is generated and stored (Git LFS)
+- **Website repo**: Where podcast page lives and references CDN URLs
+- **CDN**: Cloudflare R2 serves audio via `https://pub-8e049ed02be340cbb18f921765fd24f3.r2.dev/`
 
 ## Voice Casting Workflow (Claude-Assisted)
 
@@ -207,31 +236,53 @@ elevenlabs://21m00Tcm4TlvDq8ikWAM
 - `ErXwobaYiN019PkySvjV` - Antoni (male, well-rounded)
 - `MF3mGyEYCl7XYWbV9V6O` - Elli (young female)
 
-## Complete Workflow Example
+## Complete End-to-End Publishing Workflow
 
-### Scenario: New Podcast with 5 Episodes
+This is the **complete workflow** from .fountain files to live podcast on intrusive-memory.productions.
 
-**Step 1: Analyze Project**
+### Prerequisites Checklist
+
+Before starting, verify:
+- [ ] Produciesta CLI built and working: `produciesta --version`
+- [ ] Git LFS installed: `git lfs version`
+- [ ] Website repo cloned: `~/Projects/intrusive-memory.github.com/`
+- [ ] Podcast source repo exists (or create new)
+- [ ] CDN URL known: `https://pub-8e049ed02be340cbb18f921765fd24f3.r2.dev/`
+
+### Scenario: Publishing Daily Dao Episodes 1-5
+
+**Variables for this example:**
+- **Source repo**: `~/podcast-daily-dao/`
+- **Website repo**: `~/Projects/intrusive-memory.github.com/`
+- **Podcast slug**: `daily-dao`
+- **Audio path on CDN**: `daily-dao/` (matches slug)
+
+---
+
+### PHASE 1: Audio Generation (Source Repo)
+
+**Step 1: Analyze Episodes and Extract Characters**
+
 ```bash
-cd ~/podcast-tao-de-jing
+cd ~/podcast-daily-dao
 ls episodes/*.fountain
-# Output: chapter-01.fountain, chapter-02.fountain, ... chapter-05.fountain
+# Output: chapter-01.fountain through chapter-05.fountain
 ```
 
-**Step 2: Read Sample Episode**
-Claude reads `episodes/chapter-01.fountain` and identifies:
-- NARRATOR (reads quotes and commentary)
+Claude reads sample episodes and identifies:
+- **NARRATOR** - Reads verses and commentary
 
-**Step 3: Query Apple Voices**
+**Step 2: Query Available Voices**
+
 ```bash
 say -v '?'
 ```
 
-Claude reviews available voices and selects:
-- NARRATOR → Aaron (mature, authoritative)
+Claude selects:
+- **NARRATOR** → Aaron (mature, contemplative tone)
 
-**Step 4: Create PROJECT.md**
-Claude writes:
+**Step 3: Create PROJECT.md**
+
 ```yaml
 ---
 type: project
@@ -251,39 +302,351 @@ cast:
 ## Production Notes
 
 ### Voice Casting
-- NARRATOR: Aaron - Selected for mature, contemplative tone appropriate for philosophical content
+- NARRATOR: Aaron - Mature, authoritative voice appropriate for philosophical content
 
 ### Project Details
-- 5 episodes covering Chapters 1-5 of the Tao Te Ching
-- Each episode: ~5-7 minutes
-- Target audience: Philosophy enthusiasts
+- Episodes 1-5 of the Tao Te Ching
+- Each episode: ~4-6 minutes
 ```
 
-**Step 5: Generate Audio**
+**Step 4: Generate Audio Files**
+
 ```bash
-produciesta ~/podcast-tao-de-jing --format m4a --verbose
+produciesta . --format m4a --verbose
 ```
 
 **Output:**
 ```
-✓ Project directory: /Users/stovak/podcast-tao-de-jing
+✓ Project directory: /Users/stovak/podcast-daily-dao
 ✓ Found 5 episodes
 ✓ Cast list loaded: 1 character
 ✓ Starting generation...
 
 Episode 1/5: chapter-01.fountain
-  Parsing... ✓ 12 elements
+  Parsing... ✓ 15 elements
   Generating... ✓ 100%
-  Exporting... ✓ chapter-01.m4a (3.2 MB, 4m 32s)
+  Exporting... ✓ chapter-01.m4a (3.8 MB, 4m 45s)
 
-Episode 2/5: chapter-02.fountain
-  ...
+[... episodes 2-4 ...]
+
+Episode 5/5: chapter-05.fountain
+  Parsing... ✓ 14 elements
+  Generating... ✓ 100%
+  Exporting... ✓ chapter-05.m4a (3.5 MB, 4m 22s)
 
 ✓ Generation complete!
   Processed: 5 episodes
-  Duration: 23m 15s total
-  Output: ~/podcast-tao-de-jing/audio/
+  Duration: 23m 12s total
+  Output: ~/podcast-daily-dao/audio/
 ```
+
+**Step 5: Verify Generated Audio**
+
+```bash
+ls -lh audio/
+# Should see: chapter-01.m4a through chapter-05.m4a
+
+# Test playback of first episode
+open audio/chapter-01.m4a
+```
+
+---
+
+### PHASE 2: Git LFS Commit (Source Repo)
+
+**Step 6: Configure Git LFS (if not already done)**
+
+```bash
+# Check if LFS is tracking .m4a files
+cat .gitattributes | grep m4a
+
+# If not present, configure it:
+echo "*.m4a filter=lfs diff=lfs merge=lfs -text" >> .gitattributes
+git lfs track "*.m4a"
+```
+
+**Step 7: Commit Audio Files to LFS**
+
+```bash
+git add audio/*.m4a
+git add .gitattributes
+git commit -m "Add audio for chapters 1-5
+
+- Generated with Produciesta using Aaron (Apple TTS)
+- Total duration: 23m 12s
+- Episodes: chapter-01 through chapter-05
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+
+git push origin main
+```
+
+**Step 8: Verify LFS Upload**
+
+```bash
+git lfs ls-files
+# Should show: audio/chapter-01.m4a, chapter-02.m4a, etc.
+
+# Verify files are uploaded to LFS (not stored as blobs)
+git lfs status
+```
+
+**Step 9: Verify CDN Availability**
+
+```bash
+# Test that audio is accessible via CDN
+curl -I https://pub-8e049ed02be340cbb18f921765fd24f3.r2.dev/daily-dao/chapter-01.m4a
+
+# Should return: HTTP/2 200
+# Content-Type: audio/mp4
+```
+
+**If 404:** Wait a few minutes for LFS sync to CDN, or check CDN configuration.
+
+---
+
+### PHASE 3: Website Integration (Website Repo)
+
+**Step 10: Copy Transcripts to Website**
+
+```bash
+cd ~/Projects/intrusive-memory.github.com
+
+# Copy .fountain files to website episodes directory
+cp ~/podcast-daily-dao/episodes/*.fountain \
+   podcasts/daily-dao/episodes/
+
+# Verify copy
+ls podcasts/daily-dao/episodes/
+# Should see: chapter-01.fountain through chapter-05.fountain
+```
+
+**Step 11: Update Website Metadata**
+
+Open `podcasts/daily-dao/index.html` and verify:
+
+**Check page title and description:**
+```html
+<div class="podcast-header">
+    <h1>Daily Dao</h1>  <!-- ✓ Correct -->
+    <p>81 Chapters of the Tao Te Ching</p>  <!-- ✓ Correct -->
+```
+
+**Check CDN URLs in JavaScript:**
+```javascript
+audioSource.src = '{{ site.audio_cdn }}/daily-dao/chapter-01.m4a';
+//                                      ^^^^^^^^^ matches podcast slug
+```
+
+**Check subscribe links:**
+```html
+<a href="podcast://intrusive-memory.productions/podcasts/daily-dao/feed.xml" class="subscribe-link podcast-app">Subscribe in Podcast App</a>
+<a href="/podcasts/daily-dao/feed.xml" class="subscribe-link rss">RSS Feed</a>
+```
+
+**Step 12: Update RSS Feed**
+
+Open `podcasts/daily-dao/feed.xml` and add episodes:
+
+```xml
+<item>
+    <title>Chapter 1 - The fundamental paradox of the Tao</title>
+    <description>Chapter One introduces us to the fundamental paradox of the Tao...</description>
+    <pubDate>Wed, 12 Feb 2025 00:00:00 -0500</pubDate>
+    <enclosure url="https://pub-8e049ed02be340cbb18f921765fd24f3.r2.dev/daily-dao/chapter-01.m4a"
+               length="3980000"
+               type="audio/mp4"/>
+    <guid>https://intrusive-memory.productions/podcasts/daily-dao/chapter-01</guid>
+    <itunes:duration>285</itunes:duration>
+    <itunes:episodeType>full</itunes:episodeType>
+</item>
+```
+
+**Get file size and duration:**
+```bash
+# File size (bytes)
+stat -f%z ~/podcast-daily-dao/audio/chapter-01.m4a
+
+# Duration (seconds) - use afinfo on macOS
+afinfo ~/podcast-daily-dao/audio/chapter-01.m4a | grep "estimated duration"
+```
+
+**Step 13: Update Podcast Metadata**
+
+Update `_data/podcasts.yml` if episode count changed:
+
+```yaml
+- slug: daily-dao
+  name: Daily Dao - Tao De Jing Podcast
+  episodes: 5  # ← Update this count
+  status: in_progress  # or "complete" if all 81 done
+  published: true  # Set to true when ready to go live
+```
+
+---
+
+### PHASE 4: Validation & Testing
+
+**Step 14: Test Locally with Jekyll**
+
+```bash
+cd ~/Projects/intrusive-memory.github.com
+
+# Start Jekyll server
+bundle exec jekyll serve
+
+# Visit: http://localhost:4000/podcasts/daily-dao/
+```
+
+**Validate checklist:**
+- [ ] Page loads without errors
+- [ ] Title and subhead are correct
+- [ ] Audio player loads first episode
+- [ ] Audio plays from CDN (check network tab)
+- [ ] Transcript loads and displays correctly
+- [ ] Chapter buttons work (switch episodes)
+- [ ] Subscribe links point to correct URLs
+- [ ] RSS feed validates (use https://validator.w3.org/feed/)
+
+**Step 15: Validate RSS Feed**
+
+```bash
+# Validate feed structure
+curl http://localhost:4000/podcasts/daily-dao/feed.xml | xmllint --format -
+
+# Or use online validator:
+# https://validator.w3.org/feed/
+```
+
+**Check for:**
+- [ ] All episode `<enclosure>` URLs point to CDN
+- [ ] File sizes are accurate
+- [ ] Durations are in seconds
+- [ ] Pub dates are valid RFC-822 format
+
+**Step 16: Test Transcripts**
+
+In browser console:
+```javascript
+// Should load without errors
+fetch('/podcasts/daily-dao/episodes/chapter-01.fountain')
+  .then(r => r.text())
+  .then(console.log);
+```
+
+**Verify:**
+- [ ] .fountain files are accessible (not 404)
+- [ ] Transcript content appears (no YAML/SSML tags)
+- [ ] Switching episodes loads new transcripts
+
+---
+
+### PHASE 5: Deployment
+
+**Step 17: Commit Website Changes**
+
+```bash
+cd ~/Projects/intrusive-memory.github.com
+
+git add podcasts/daily-dao/episodes/*.fountain
+git add podcasts/daily-dao/feed.xml
+git add podcasts/daily-dao/index.html  # if modified
+git add _data/podcasts.yml  # if modified
+
+git commit -m "Publish Daily Dao episodes 1-5
+
+- Add transcripts for chapters 1-5
+- Update RSS feed with new episodes
+- Update episode count in podcasts.yml
+- CDN audio URLs verified and working
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+```
+
+**Step 18: Push to Production**
+
+```bash
+git push origin master
+```
+
+**Step 19: Verify GitHub Pages Build**
+
+```bash
+# Check build status (if gh CLI installed)
+gh run list --limit 1
+
+# Or visit: https://github.com/intrusive-memory/intrusive-memory.github.com/actions
+```
+
+**Wait for:**
+- ✅ GitHub Pages build completes (~1-2 minutes)
+- ✅ Changes deploy to production
+
+**Step 20: Final Production Validation**
+
+Visit live site: `https://intrusive-memory.productions/podcasts/daily-dao/`
+
+**Final checklist:**
+- [ ] Page loads on production
+- [ ] Audio plays from CDN
+- [ ] Transcripts display correctly
+- [ ] Subscribe links work
+- [ ] RSS feed accessible at `/podcasts/daily-dao/feed.xml`
+- [ ] Test subscribe in podcast app (Apple Podcasts, Overcast, etc.)
+
+---
+
+### Workflow Summary
+
+```
+┌─────────────────────────────────────────┐
+│ PHASE 1: Audio Generation               │
+│  - Analyze .fountain files              │
+│  - Create PROJECT.md with cast          │
+│  - Generate audio with Produciesta      │
+│  - Verify playback locally              │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│ PHASE 2: Git LFS Commit                 │
+│  - Configure LFS for .m4a               │
+│  - Commit audio files                   │
+│  - Push to remote                       │
+│  - Verify CDN availability              │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│ PHASE 3: Website Integration            │
+│  - Copy transcripts to website          │
+│  - Update index.html metadata           │
+│  - Update RSS feed with episodes        │
+│  - Update _data/podcasts.yml            │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│ PHASE 4: Validation & Testing           │
+│  - Test locally with Jekyll             │
+│  - Validate RSS feed                    │
+│  - Check audio playback                 │
+│  - Verify transcripts load              │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│ PHASE 5: Deployment                     │
+│  - Commit website changes               │
+│  - Push to production                   │
+│  - Verify GitHub Pages build            │
+│  - Final production validation          │
+└─────────────────────────────────────────┘
+```
+
+**Time Estimate:**
+- Audio generation: ~2-3 minutes per episode
+- LFS commit & CDN verify: 5-10 minutes
+- Website updates: 10-15 minutes
+- Testing & validation: 10-15 minutes
+- Deployment: 5-10 minutes
+- **Total for 5 episodes: ~45-60 minutes**
 
 ## Character Analysis Guidelines
 
@@ -489,6 +852,235 @@ produciesta /path/to/project --fail-fast
 produciesta /path/to/project --ignore-generation-errors
 ```
 
+## Transcript Generation for Web Players
+
+After generating audio, you can deploy .fountain files as transcripts for your podcast website. The web player JavaScript automatically parses and displays them under the audio player.
+
+### Transcript Structure
+
+The same .fountain files used for audio generation serve as transcripts:
+
+**Example: chapter-01.fountain**
+```fountain
+---
+title: Tao De Jing - Chapter 1
+album: Tao De Jing Podcast
+artist: Tao De Jing
+track: 1
+description: Chapter One introduces the fundamental paradox of the Tao.
+---
+===
+
+Tao De Jing - Chapter 1
+
+[[ slnc 1000 ]]
+
+Chapter One introduces us to the fundamental paradox of the Tao.
+
+[[ slnc 1000 ]]
+[[rate 100]]
+
+Speak it aloud, and it slips from your grasp...
+
+[[ rset]]
+```
+
+### How Transcripts Are Displayed
+
+The web player JavaScript (in each podcast's `index.html`):
+
+1. **Fetches** the .fountain file from `episodes/` directory
+2. **Parses** with `parseFountain()` function:
+   - Removes YAML frontmatter (`---...---`)
+   - Removes section markers (`===`)
+   - Strips SSML tags (`[[ slnc 1000 ]]`, `[[rate 100]]`, `[[ rset]]`)
+   - Splits into lines
+3. **Displays** clean text in the transcript section
+
+**Result:** Only the actual spoken content appears in the transcript.
+
+### Preparing Transcripts for Website
+
+#### Step 1: Copy Fountain Files to Website
+
+```bash
+# For a podcast at ~/Projects/intrusive-memory.github.com/podcasts/daily-dao/
+
+# Copy all episodes to website episodes directory
+cp ~/podcast-project/episodes/*.fountain \
+   ~/Projects/intrusive-memory.github.com/podcasts/daily-dao/episodes/
+
+# Or copy individual episodes
+cp ~/podcast-project/episodes/chapter-01.fountain \
+   ~/Projects/intrusive-memory.github.com/podcasts/daily-dao/episodes/
+```
+
+#### Step 2: Verify Transcript Section in index.html
+
+Ensure the podcast's `index.html` includes the transcript section:
+
+**CSS (in `<style>` block):**
+```css
+.transcript-section {
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.transcript-content {
+    font-family: 'Roboto', sans-serif;
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.transcript-line {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+```
+
+**HTML (before chapters section):**
+```html
+<div class="transcript-section">
+    <h3>Transcript</h3>
+    <div class="transcript-content" id="transcript-content">
+        <p class="transcript-loading">Loading transcript...</p>
+    </div>
+</div>
+```
+
+**JavaScript functions:**
+```javascript
+function parseFountain(text) {
+    let content = text.replace(/^---[\s\S]*?---\s*/m, '');
+    content = content.replace(/^===\s*/m, '');
+    content = content.replace(/\[\[\s*slnc\s+\d+\s*\]\]/gi, '');
+    content = content.replace(/\[\[\s*rate\s+\d+\s*\]\]/gi, '');
+    content = content.replace(/\[\[\s*rset\s*\]\]/gi, '');
+    const lines = content.split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
+    return lines;
+}
+
+async function loadTranscript(filename) {
+    const url = '{{ site.baseurl }}/podcasts/podcast-name/episodes/' + filename;
+
+    transcriptContent.innerHTML = '<p class="transcript-loading">Loading transcript...</p>';
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to load');
+        const text = await response.text();
+        const lines = parseFountain(text);
+
+        transcriptContent.innerHTML = lines.map((line, index) => {
+            return '<div class="transcript-line" data-line="' + index + '">' + line + '</div>';
+        }).join('');
+    } catch (error) {
+        transcriptContent.innerHTML = '<p class="transcript-loading">Transcript not available</p>';
+    }
+}
+```
+
+**Call on chapter change:**
+```javascript
+function playChapter(chapterNum) {
+    // ... audio loading code ...
+    loadTranscript('chapter-' + padNumber(chapterNum) + '.fountain');
+}
+```
+
+#### Step 3: Deploy and Test
+
+```bash
+# Commit to git
+cd ~/Projects/intrusive-memory.github.com
+git add podcasts/podcast-name/episodes/*.fountain
+git add podcasts/podcast-name/index.html
+git commit -m "Add transcripts for podcast episodes"
+git push
+
+# Test locally (if using Jekyll)
+bundle exec jekyll serve
+# Visit: http://localhost:4000/podcasts/podcast-name/
+```
+
+### Transcript File Naming Conventions
+
+Match the naming pattern used by your audio files:
+
+**Daily Dao (numbered chapters):**
+```
+chapter-01.fountain
+chapter-02.fountain
+...
+chapter-81.fountain
+```
+
+**Meditations (Julian day + date):**
+```
+001_january_01.fountain
+002_january_02.fountain
+...
+365_december_31.fountain
+```
+
+**Custom naming (YNTSWYD):**
+```
+Chapter 1.fountain
+Chapter 2.fountain
+Epilogue.fountain
+```
+
+**Critical:** The filename must match what the JavaScript `loadTranscript()` function constructs.
+
+### Workflow Integration
+
+When generating audio with this skill:
+
+1. **Generate audio** with Produciesta
+2. **Copy .fountain files** to website `episodes/` directory
+3. **Verify** transcript section exists in `index.html`
+4. **Test** locally that transcripts load correctly
+5. **Deploy** to production
+
+### Complete Workflow Reference
+
+For the full end-to-end workflow including:
+- Audio generation
+- Git LFS commit and CDN verification
+- Transcript deployment
+- RSS feed updates
+- Validation and testing
+- Production deployment
+
+**See: "Complete End-to-End Publishing Workflow" section above.**
+
+That section provides a step-by-step walkthrough with all commands, validation steps, and troubleshooting guidance.
+
+### Troubleshooting Transcripts
+
+**Transcript shows "Transcript not available":**
+- Verify .fountain file exists in `episodes/` directory
+- Check filename matches what JavaScript constructs
+- Inspect browser console for 404 errors
+- Verify file permissions (should be readable)
+
+**Transcript shows SSML tags like `[[ slnc 1000 ]]`:**
+- Update `parseFountain()` function to strip all SSML tags
+- See reference implementation in Daily Dao or Meditations
+
+**Transcript shows YAML frontmatter:**
+- Verify regex in `parseFountain()` correctly removes frontmatter
+- Pattern should be: `/^---[\s\S]*?---\s*/m`
+
+**Lines are concatenated (not separated):**
+- Check that `split('\n')` is being used
+- Verify lines are wrapped in `<div class="transcript-line">` tags
+
 ## Troubleshooting
 
 ### Error: "Character not found in cast list"
@@ -661,6 +1253,200 @@ produciesta . --format m4a --verbose
 - **Fountain Format**: https://fountain.io/
 - **ElevenLabs Voice Library**: https://elevenlabs.io/voice-library
 
+## Quick Reference: Common Commands
+
+### Audio Generation
+```bash
+# Generate all episodes
+produciesta /path/to/project --format m4a --verbose
+
+# Generate single episode
+produciesta /path/to/project --episode chapter-01.fountain
+
+# Dry run (preview without generating)
+produciesta /path/to/project --dry-run
+
+# Skip existing files
+produciesta /path/to/project --skip-existing
+```
+
+### Git LFS Management
+```bash
+# Configure LFS for audio files
+git lfs track "*.m4a"
+echo "*.m4a filter=lfs diff=lfs merge=lfs -text" >> .gitattributes
+
+# Check LFS status
+git lfs ls-files
+git lfs status
+
+# Verify file is in LFS (not regular git)
+git lfs ls-files | grep chapter-01.m4a
+```
+
+### CDN Verification
+```bash
+# Test audio availability on CDN
+curl -I https://pub-8e049ed02be340cbb18f921765fd24f3.r2.dev/podcast-slug/chapter-01.m4a
+
+# Should return: HTTP/2 200
+```
+
+### Transcript Deployment
+```bash
+# Copy transcripts from source to website
+cp ~/podcast-source/episodes/*.fountain \
+   ~/Projects/intrusive-memory.github.com/podcasts/podcast-slug/episodes/
+
+# Verify copy
+ls -la ~/Projects/intrusive-memory.github.com/podcasts/podcast-slug/episodes/
+```
+
+### Get Audio Metadata
+```bash
+# File size (bytes) for RSS feed
+stat -f%z audio/chapter-01.m4a
+
+# Duration (seconds) for RSS feed
+afinfo audio/chapter-01.m4a | grep "estimated duration"
+
+# Or use ffprobe
+ffprobe -v quiet -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 audio/chapter-01.m4a
+```
+
+### Jekyll Testing
+```bash
+cd ~/Projects/intrusive-memory.github.com
+
+# Start local server
+bundle exec jekyll serve
+
+# Visit: http://localhost:4000/podcasts/podcast-slug/
+
+# Stop server: Ctrl+C
+```
+
+### RSS Feed Validation
+```bash
+# Validate feed locally
+curl http://localhost:4000/podcasts/podcast-slug/feed.xml | xmllint --format -
+
+# Or use online validator:
+# https://validator.w3.org/feed/
+```
+
+## Pre-Flight Validation Checklist
+
+Before starting audio generation:
+
+**Source Repository:**
+- [ ] Produciesta CLI installed and working: `produciesta --version`
+- [ ] All .fountain files present in `episodes/`
+- [ ] PROJECT.md exists with cast list
+- [ ] Git LFS configured: `git lfs version`
+- [ ] `.gitattributes` has `*.m4a` LFS tracking
+
+**Website Repository:**
+- [ ] Podcast page exists at `podcasts/<slug>/`
+- [ ] `index.html` has transcript section (CSS, HTML, JavaScript)
+- [ ] `feed.xml` template ready
+- [ ] `_data/podcasts.yml` has podcast entry
+
+**Environment:**
+- [ ] Jekyll works: `bundle exec jekyll serve`
+- [ ] Git authentication configured
+- [ ] CDN URL known
+
+## Post-Deployment Validation Checklist
+
+After pushing to production:
+
+**Production Site:**
+- [ ] Page loads: `https://intrusive-memory.productions/podcasts/<slug>/`
+- [ ] Audio plays from CDN (check Network tab in browser DevTools)
+- [ ] Transcripts load and display correctly
+- [ ] Chapter/episode switching works
+- [ ] Subscribe links are correct
+- [ ] RSS feed accessible: `https://intrusive-memory.productions/podcasts/<slug>/feed.xml`
+
+**RSS Feed:**
+- [ ] Feed validates: https://validator.w3.org/feed/
+- [ ] All episodes have `<enclosure>` tags with CDN URLs
+- [ ] File sizes match actual audio file sizes
+- [ ] Durations are accurate (in seconds)
+- [ ] Pub dates are valid RFC-822 format
+- [ ] Test subscribe in podcast app (Apple Podcasts, Overcast, etc.)
+
+**GitHub:**
+- [ ] GitHub Pages build succeeded
+- [ ] No build errors in Actions tab
+- [ ] LFS files uploaded successfully
+
+## Common Troubleshooting
+
+### Issue: Audio generation fails with "Character not found"
+
+**Cause:** Fountain file has character not in PROJECT.md cast.
+
+**Solution:**
+```bash
+# Re-analyze fountain files
+grep "^[A-Z][A-Z ]*$" episodes/*.fountain | sort -u
+
+# Add missing characters to PROJECT.md cast section
+```
+
+### Issue: CDN returns 404 for audio files
+
+**Cause:** LFS files not synced to CDN yet.
+
+**Solutions:**
+1. Wait 5-10 minutes for sync
+2. Verify LFS upload: `git lfs ls-files`
+3. Check file is actually in LFS: `git lfs ls-files | grep filename`
+4. Verify CDN URL path matches podcast slug
+
+### Issue: Transcripts show "Transcript not available"
+
+**Cause:** .fountain files not copied to website or filename mismatch.
+
+**Solutions:**
+1. Verify files copied: `ls podcasts/<slug>/episodes/*.fountain`
+2. Check browser console for 404 errors
+3. Verify filename matches JavaScript `loadTranscript()` call
+4. Check file permissions: `chmod 644 episodes/*.fountain`
+
+### Issue: RSS feed validation fails
+
+**Common errors and fixes:**
+- **Invalid date format:** Use RFC-822 format: `Wed, 12 Feb 2025 00:00:00 -0500`
+- **Invalid enclosure URL:** Must be full CDN URL with https://
+- **Missing duration:** Add `<itunes:duration>285</itunes:duration>` (in seconds)
+- **Invalid file size:** Get actual size with `stat -f%z audio/file.m4a`
+
+### Issue: Jekyll build fails
+
+**Common causes:**
+- YAML syntax error in frontmatter
+- Invalid HTML in index.html
+- Missing required files (favicon, artwork)
+
+**Debug:**
+```bash
+bundle exec jekyll build --verbose
+# Read error message carefully
+# Fix syntax errors in indicated files
+```
+
+### Issue: GitHub Pages not updating
+
+**Solutions:**
+1. Check build status: `gh run list --limit 1`
+2. View build logs in Actions tab
+3. Hard refresh browser: Cmd+Shift+R (macOS) or Ctrl+Shift+R (Windows)
+4. Clear browser cache
+5. Wait 2-3 minutes for CDN cache invalidation
+
 ## Notes
 
 - **Do NOT use `--autocast` flag** - it's currently not working
@@ -668,3 +1454,7 @@ produciesta . --format m4a --verbose
 - Always verify voice URIs are correct format before generation
 - Produciesta handles all audio generation - Claude only creates cast list
 - Error logs saved to `GENERATION_ERRORS.md` in project root
+- **Audio files are in Git LFS** - not regular git blobs
+- **CDN serves audio** - website only references CDN URLs
+- **Transcripts are .fountain files** - copied from source repo to website
+- **RSS feeds must be manually updated** - no auto-generation yet

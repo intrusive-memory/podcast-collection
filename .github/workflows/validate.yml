@@ -3,14 +3,8 @@ name: Validate Files
 on:
   pull_request:
     branches: [main]
-    paths:
-      - '**.json'
-      - '**.opml'
   push:
     branches: [development]
-    paths:
-      - '**.json'
-      - '**.opml'
 
 jobs:
   validate-json:
