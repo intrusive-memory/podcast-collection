@@ -1,0 +1,164 @@
+name: Validate Files
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.json'
+      - '**.opml'
+  push:
+    branches: [development]
+    paths:
+      - '**.json'
+      - '**.opml'
+
+jobs:
+  validate-json:
+    name: Validate JSON Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find and validate JSON files
+        run: |
+          echo "🔍 Finding JSON files..."
+          json_files=$(find . -name "*.json" -not -path "*/node_modules/*" -not -path "*/.git/*")
+
+          if [ -z "$json_files" ]; then
+            echo "✅ No JSON files found to validate"
+            exit 0
+          fi
+
+          echo "Found JSON files:"
+          echo "$json_files"
+          echo ""
+
+          failed=0
+          for file in $json_files; do
+            echo "Validating: $file"
+            if ! jq empty "$file" 2>/dev/null; then
+              echo "❌ FAILED: $file is not valid JSON"
+              failed=1
+            else
+              echo "✅ PASSED: $file"
+            fi
+          done
+
+          if [ $failed -eq 1 ]; then
+            echo ""
+            echo "❌ JSON validation failed"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ All JSON files are valid"
+
+  validate-opml:
+    name: Validate OPML Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+      - name: Find and validate OPML files
+        run: |
+          echo "🔍 Finding OPML files..."
+          opml_files=$(find . -name "*.opml" -not -path "*/node_modules/*" -not -path "*/.git/*")
+
+          if [ -z "$opml_files" ]; then
+            echo "✅ No OPML files found to validate"
+            exit 0
+          fi
+
+          echo "Found OPML files:"
+          echo "$opml_files"
+          echo ""
+
+          failed=0
+          for file in $opml_files; do
+            echo "Validating: $file"
+            if ! xmllint --noout "$file" 2>/dev/null; then
+              echo "❌ FAILED: $file is not valid XML"
+              failed=1
+            else
+              echo "✅ PASSED: $file"
+            fi
+          done
+
+          if [ $failed -eq 1 ]; then
+            echo ""
+            echo "❌ OPML validation failed"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ All OPML files are valid"
+
+  validate-skills:
+    name: Validate Agent Skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PyYAML
+        run: pip install PyYAML
+
+      - name: Download skill validator
+        run: |
+          curl -o validate_skill.py https://raw.githubusercontent.com/anthropics/skills/main/skills/skill-creator/scripts/quick_validate.py
+          chmod +x validate_skill.py
+
+      - name: Validate skills
+        run: |
+          echo "🔍 Finding skill directories..."
+
+          # Check if skills directory exists
+          if [ ! -d "skills" ]; then
+            echo "✅ No skills directory found, skipping validation"
+            exit 0
+          fi
+
+          # Find all skill directories (containing SKILL.md)
+          skill_dirs=$(find skills -name "SKILL.md" -not -path "*/node_modules/*" -exec dirname {} \; | sort -u)
+
+          if [ -z "$skill_dirs" ]; then
+            echo "✅ No skill directories found to validate"
+            exit 0
+          fi
+
+          echo "Found skill directories:"
+          echo "$skill_dirs"
+          echo ""
+
+          failed=0
+          for skill_dir in $skill_dirs; do
+            echo "Validating skill: $skill_dir"
+
+            if python3 validate_skill.py "$skill_dir"; then
+              echo "✅ PASSED: $skill_dir"
+            else
+              echo "❌ FAILED: $skill_dir"
+              failed=1
+            fi
+            echo ""
+          done
+
+          if [ $failed -eq 1 ]; then
+            echo "❌ Skill validation failed"
+            exit 1
+          fi
+
+          echo "✅ All skills are valid"
