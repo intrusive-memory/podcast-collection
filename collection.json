@@ -145,11 +145,11 @@
     },
     {
       "name": "Therapist GPT",
-      "published": false,
-      "feedURL": "https://intrusive-memory.productions/therapist-gpt/feed.xml",
-      "websiteURL": "https://intrusive-memory.productions/therapist-gpt/",
-      "summary": "Therapeutic insights and advice through AI-generated conversations.",
-      "description": "A podcast utilizing GPT technology to provide therapeutic insights, exploring mental health topics, coping strategies, and personal growth through conversational AI.",
+      "published": true,
+      "feedURL": "https://intrusive-memory.productions/podcasts/therapist-gpt/feed.xml",
+      "websiteURL": "https://intrusive-memory.productions/podcasts/therapist-gpt/",
+      "summary": "Part therapist, part journal, part confession: This is a look at a programming job in the evolving world of AI. Thoughts, cares, feelings, it's all a big mess. This is where we embrace the big mess.",
+      "description": "Part therapist, part journal, part confession: This is a look at a programming job in the evolving world of AI. Thoughts, cares, feelings, it's all a big mess. This is where we embrace the big mess.",
       "author": "Tom Stovall",
       "genre": "Education",
       "language": "en",
@@ -161,7 +161,7 @@
         "mental-health",
         "ai"
       ],
-      "episodeCount": 2,
+      "episodeCount": 12,
       "status": "active",
       "explicit": false
     },
